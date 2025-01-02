@@ -1,0 +1,2 @@
+import"./assets/styles-BVPhrJ-t.js";let o={email:"",message:""};const r=document.querySelector(".feedback-form"),n=()=>{try{if(localStorage.length===0)return;const e=JSON.parse(localStorage.getItem("feedback-form-state"));for(const t in e)r.elements[t].value=e[t];o=e}catch{}};n();const c=e=>{const t=e.target,a=t.value,l=t.name;o[l]=a,localStorage.setItem("feedback-form-state",JSON.stringify(o))};r.addEventListener("input",c);const s=e=>{e.preventDefault(),console.log(o),e.currentTarget.reset()};r.addEventListener("submit",s);
+//# sourceMappingURL=2-form.js.map
