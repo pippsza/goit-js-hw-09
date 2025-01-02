@@ -2,7 +2,6 @@ console.log('121212')
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import "/Users/pippsza/Desktop/Work/goit-js-hw-09/node_modules/simplelightbox/dist/"
 const images = [
     {
       id: 1,
