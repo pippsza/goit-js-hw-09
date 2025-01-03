@@ -6,30 +6,28 @@ let formData = {
 const feedbackFormEl = document.querySelector('.feedback-form');
 const fillFormFields = () => {
   try {
-    if (localStorage.length === 0) {
+    const formDataFromLS = localStorage.getItem('feedback-form-state');
+    if (!formDataFromLS) {
       return;
     }
-    const formDataFromLS = JSON.parse(
-      localStorage.getItem('feedback-form-state')
-    );
+    const parsedData = JSON.parse(formDataFromLS);
 
-    for (const key in formDataFromLS) {
-      feedbackFormEl.elements[key].value = formDataFromLS[key];
+    for (const key in parsedData) {
+      feedbackFormEl.elements[key].value = parsedData[key];
     }
-    formData = formDataFromLS;
+    formData = parsedData;
   } catch (error) {
-    error;
+    console.error(error);
   }
 };
 fillFormFields();
 
 const onFormFieldChange = event => {
   const formFieldEl = event.target;
-  const fielValue = formFieldEl.value;
+  const fieldValue = formFieldEl.value;
   const fieldName = formFieldEl.name;
-  formData[fieldName] = fielValue;
-  //   console.log(formData.email);
-  //   console.log(formData.message);
+  formData[fieldName] = fieldValue;
+
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 };
 
@@ -37,7 +35,27 @@ feedbackFormEl.addEventListener('input', onFormFieldChange);
 
 const onFeedbackFormSubmit = event => {
   event.preventDefault();
+  let isFormValid = true;
+  for (const key in formData) {
+    if (formData[key].trim() === '') {
+      isFormValid = false;
+      break;
+    }
+  }
+
+  if (!isFormValid) {
+    alert('Fill please all fields');
+    return;
+  }
+
   console.log(formData);
+
   event.currentTarget.reset();
+  localStorage.removeItem('feedback-form-state');
+  formData = {
+    email: '',
+    message: '',
+  };
 };
+
 feedbackFormEl.addEventListener('submit', onFeedbackFormSubmit);
